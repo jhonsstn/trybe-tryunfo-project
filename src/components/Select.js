@@ -10,11 +10,17 @@ class Select extends React.Component {
   // }
 
   render() {
-    const { label, id, dataTestId } = this.props;
+    const { label, id, dataTestId, value, onInputChange } = this.props;
     return (
       <label htmlFor={ id }>
         {label}
-        <select name={ id } id={ id } data-testid={ dataTestId }>
+        <select
+          name={ id }
+          id={ id }
+          data-testid={ dataTestId }
+          value={ value }
+          onChange={ onInputChange }
+        >
           <option value="normal">Normal</option>
           <option value="raro">Raro</option>
           <option value="muito raro">Muito Raro</option>
@@ -28,6 +34,8 @@ Select.propTypes = {
   dataTestId: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default Select;

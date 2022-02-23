@@ -10,7 +10,7 @@ class TextArea extends React.Component {
   // }
 
   render() {
-    const { label, id, dataTestId } = this.props;
+    const { label, id, dataTestId, value, onInputChange } = this.props;
     return (
       <label htmlFor={ id }>
         {label}
@@ -18,6 +18,8 @@ class TextArea extends React.Component {
           name={ id }
           id={ id }
           data-testid={ dataTestId }
+          value={ value }
+          onChange={ onInputChange }
           cols="30"
           rows="10"
         />
@@ -30,6 +32,8 @@ TextArea.propTypes = {
   dataTestId: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default TextArea;

@@ -10,10 +10,17 @@ class Button extends React.Component {
   // }
 
   render() {
-    const { id, label, dataTestId } = this.props;
+    const { id, label, dataTestId, disabled, onSaveButtonClick } = this.props;
 
     return (
-      <button type="submit" id={ id } data-testid={ dataTestId }>
+      <button
+        disabled={ disabled }
+        name="submit"
+        type="submit"
+        id={ id }
+        data-testid={ dataTestId }
+        onClick={ onSaveButtonClick }
+      >
         {label}
       </button>
     );
@@ -22,8 +29,10 @@ class Button extends React.Component {
 
 Button.propTypes = {
   dataTestId: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  onSaveButtonClick: PropTypes.func.isRequired,
 };
 
 export default Button;
