@@ -20,6 +20,7 @@ class Select extends React.Component {
           data-testid={ dataTestId }
           value={ value }
           onChange={ onInputChange }
+          required
         >
           <option value="normal">Normal</option>
           <option value="raro">Raro</option>

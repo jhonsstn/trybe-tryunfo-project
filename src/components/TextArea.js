@@ -22,6 +22,7 @@ class TextArea extends React.Component {
           onChange={ onInputChange }
           cols="30"
           rows="10"
+          required
         />
       </label>
     );
