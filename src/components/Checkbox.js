@@ -10,7 +10,7 @@ class Input extends React.Component {
   // }
 
   render() {
-    const { label, id, type, dataTestId, onInputChange, value } = this.props;
+    const { label, id, type, dataTestId, onInputChange, checked } = this.props;
     return (
       <label htmlFor={ id }>
         {label}
@@ -18,7 +18,7 @@ class Input extends React.Component {
           type={ type }
           id={ id }
           name={ id }
-          value={ value }
+          checked={ checked }
           data-testid={ dataTestId }
           onChange={ onInputChange }
           required
@@ -34,7 +34,7 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
   onInputChange: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  checked: PropTypes.bool.isRequired,
 };
 
 export default Input;

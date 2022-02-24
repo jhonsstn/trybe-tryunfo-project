@@ -22,16 +22,19 @@ class Card extends React.Component {
         <p data-testid="attr2-card">{cardAttr2}</p>
         <p data-testid="attr3-card">{cardAttr3}</p>
         <p data-testid="rare-card">{cardRare}</p>
-        {cardTrunfo ? <p data-testid="trunfo-card">Super Trunfo</p> : undefined}
+        {cardTrunfo && <p data-testid="trunfo-card">Super Trunfo</p>}
       </div>
     );
   }
 }
 
 Card.propTypes = {
-  cardAttr1: PropTypes.string.isRequired,
-  cardAttr2: PropTypes.string.isRequired,
-  cardAttr3: PropTypes.string.isRequired,
+  cardAttr1: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  cardAttr2: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  cardAttr3: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
   cardDescription: PropTypes.string.isRequired,
   cardImage: PropTypes.string.isRequired,
   cardName: PropTypes.string.isRequired,

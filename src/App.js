@@ -14,15 +14,41 @@ class App extends React.Component {
       image: '',
       rarity: '',
       tryunfo: false,
-      submit: false, // TODO: Deve iniciar em true
+      hasTrunfo: false,
+      isSaveButtonDisabled: true, // TODO: Deve iniciar em true
       cards: [],
     };
   }
 
   onInputChange = ({ target }) => {
     const { name, value, type, checked } = target;
+    this.setState(
+      () => ({
+        [name]: type === 'checkbox' ? checked : value,
+      }),
+      () => this.validateInputs(),
+    );
+  };
+
+  validateInputs = () => {
+    const { name, description, attr01, attr02, attr03, image, rarity } = this.state;
+    let buttonDisabled = false;
+    if (!name || !description || !image || !rarity) buttonDisabled = true;
+    const minValue = 0;
+    const maxValue = 90;
+    const totalValue = 210;
+    const value1 = Number(attr01);
+    const value2 = Number(attr02);
+    const value3 = Number(attr03);
+    if (value1 + value2 + value3 > totalValue) buttonDisabled = true;
+    if (value1 < minValue
+      || value2 < minValue
+      || value3 < minValue) buttonDisabled = true;
+    if (value1 > maxValue
+      || value2 > maxValue
+      || value3 > maxValue) buttonDisabled = true;
     this.setState({
-      [name]: type === 'checkbox' ? checked : value,
+      isSaveButtonDisabled: buttonDisabled,
     });
   };
 
@@ -38,6 +64,7 @@ class App extends React.Component {
       rarity,
       tryunfo,
     } = this.state;
+    if (tryunfo) this.setState({ hasTrunfo: true });
     const newCard = {
       name,
       description,
@@ -51,6 +78,7 @@ class App extends React.Component {
     this.setState((prev) => ({
       cards: [...prev.cards, newCard],
     }));
+
     this.setState({
       name: '',
       description: '',
@@ -60,7 +88,20 @@ class App extends React.Component {
       image: '',
       rarity: '',
       tryunfo: false,
+      isSaveButtonDisabled: true,
     });
+  };
+
+  // TODO: Onde botar essa função ????????
+  alreadyHaveTrunfo = () => {
+    console.log('Rodou!!');
+    const { cards } = this.state;
+    if (cards.find((card) => card.tryunfo === true).length !== 0) {
+      console.log(cards.filter((card) => card.tryunfo === true));
+      this.setState(() => ({
+        hasTrunfo: true,
+      }));
+    }
   };
 
   render() {
@@ -73,8 +114,9 @@ class App extends React.Component {
       image,
       rarity,
       tryunfo,
-      submit,
+      isSaveButtonDisabled,
       cards,
+      hasTrunfo,
     } = this.state;
     return (
       <div>
@@ -87,10 +129,11 @@ class App extends React.Component {
           cardImage={ image }
           cardRare={ rarity }
           cardTrunfo={ tryunfo }
-          // hasTrunfo={} TODO: Sera usado mais a frente
-          isSaveButtonDisabled={ submit }
+          hasTrunfo={ hasTrunfo } // FIXME: Sera usado mais a frente
+          isSaveButtonDisabled={ isSaveButtonDisabled }
           onInputChange={ this.onInputChange }
           onSaveButtonClick={ this.onSaveButtonClick }
+          alreadyHaveTrunfo={ this.alreadyHaveTrunfo }
         />
 
         <Card
@@ -103,20 +146,29 @@ class App extends React.Component {
           cardRare={ rarity }
           cardTrunfo={ tryunfo }
         />
-
-        {cards.map((card) => (
-          <Card
-            key={ card.name }
-            cardName={ card.name }
-            cardDescription={ card.description }
-            cardAttr1={ card.attr01 }
-            cardAttr2={ card.attr02 }
-            cardAttr3={ card.attr03 }
-            cardImage={ card.image }
-            cardRare={ card.rarity }
-            cardTrunfo={ card.tryunfo }
-          />
-        ))}
+        <div>
+          {cards.map((card) => (
+            <div key={ card.name }>
+              <Card
+                cardName={ card.name }
+                cardDescription={ card.description }
+                cardAttr1={ card.attr01 }
+                cardAttr2={ card.attr02 }
+                cardAttr3={ card.attr03 }
+                cardImage={ card.image }
+                cardRare={ card.rarity }
+                cardTrunfo={ card.tryunfo }
+              />
+              <button
+                data-testid="delete-button"
+                type="button"
+                onClick={ this.removeCard }
+              >
+                Excluir
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

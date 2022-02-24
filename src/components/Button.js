@@ -2,24 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Button extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     someKey: 'someValue'
-  //   };
-  // }
-
   render() {
     const { id, label, dataTestId, disabled, onSaveButtonClick } = this.props;
 
     return (
       <button
         disabled={ disabled }
-        name="submit"
         type="submit"
+        form={ id }
         id={ id }
         data-testid={ dataTestId }
         onClick={ onSaveButtonClick }
+        value={ id }
       >
         {label}
       </button>
