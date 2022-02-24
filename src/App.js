@@ -92,17 +92,14 @@ class App extends React.Component {
     });
   };
 
-  // TODO: Onde botar essa função ????????
-  alreadyHaveTrunfo = () => {
-    console.log('Rodou!!');
-    const { cards } = this.state;
-    if (cards.find((card) => card.tryunfo === true).length !== 0) {
-      console.log(cards.filter((card) => card.tryunfo === true));
-      this.setState(() => ({
-        hasTrunfo: true,
-      }));
-    }
-  };
+  removeCard = (key, isTryunfo) => {
+    const { cards, hasTrunfo } = this.state;
+    const newCards = cards.filter((card) => card.name !== key);
+    this.setState(() => ({
+      cards: newCards,
+      hasTrunfo: isTryunfo ? false : hasTrunfo,
+    }));
+  }
 
   render() {
     const {
@@ -162,7 +159,7 @@ class App extends React.Component {
               <button
                 data-testid="delete-button"
                 type="button"
-                onClick={ this.removeCard }
+                onClick={ () => this.removeCard(card.name, card.tryunfo) }
               >
                 Excluir
               </button>
