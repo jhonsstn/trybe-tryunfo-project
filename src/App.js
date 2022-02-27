@@ -1,4 +1,5 @@
 import React from 'react';
+import { randomUUID } from 'crypto';
 import Form from './components/Form';
 import Card from './components/Card';
 
@@ -66,6 +67,7 @@ class App extends React.Component {
     } = this.state;
     if (tryunfo) this.setState({ hasTrunfo: true });
     const newCard = {
+      id: randomUUID(),
       name,
       description,
       attr01,
@@ -92,9 +94,9 @@ class App extends React.Component {
     });
   };
 
-  removeCard = (key, isTryunfo) => {
+  removeCard = (id, isTryunfo) => {
     const { cards, hasTrunfo } = this.state;
-    const newCards = cards.filter((card) => card.name !== key);
+    const newCards = cards.filter((card) => card.id !== id);
     this.setState(() => ({
       cards: newCards,
       hasTrunfo: isTryunfo ? false : hasTrunfo,
@@ -145,7 +147,7 @@ class App extends React.Component {
         />
         <div>
           {cards.map((card) => (
-            <div key={ card.name }>
+            <div key={ card.id }>
               <Card
                 cardName={ card.name }
                 cardDescription={ card.description }
@@ -159,7 +161,7 @@ class App extends React.Component {
               <button
                 data-testid="delete-button"
                 type="button"
-                onClick={ () => this.removeCard(card.name, card.tryunfo) }
+                onClick={ () => this.removeCard(card.id, card.tryunfo) }
               >
                 Excluir
               </button>

@@ -2,13 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 class Select extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     someKey: 'someValue',
-  //   };
-  // }
-
   render() {
     const { label, id, dataTestId, value, onInputChange } = this.props;
     return (

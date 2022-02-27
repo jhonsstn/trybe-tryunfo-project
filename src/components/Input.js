@@ -2,13 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 class Input extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     someKey: 'someValue',
-  //   };
-  // }
-
   render() {
     const { label, id, type, dataTestId, onInputChange, value } = this.props;
     return (
