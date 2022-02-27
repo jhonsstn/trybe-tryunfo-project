@@ -1,5 +1,5 @@
 import React from 'react';
-import { randomUUID } from 'crypto';
+import { nanoid } from 'nanoid';
 import Form from './components/Form';
 import Card from './components/Card';
 
@@ -67,7 +67,7 @@ class App extends React.Component {
     } = this.state;
     if (tryunfo) this.setState({ hasTrunfo: true });
     const newCard = {
-      id: randomUUID(),
+      id: nanoid(),
       name,
       description,
       attr01,
